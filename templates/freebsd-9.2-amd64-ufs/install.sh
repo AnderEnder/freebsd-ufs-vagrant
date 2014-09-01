@@ -69,9 +69,18 @@ cat src.txz | tar --unlink -xpJf - -C /mnt
 sleep 10
 # Enable required services
 cat >> /mnt/etc/rc.conf << EOT
+dumpdev="NO"
 hostname="${NAME}"
+
+ifconfig_vtnet0_name="em0"
+ifconfig_vtnet1_name="em1"
 ifconfig_em0="dhcp"
+
+# SSH
 sshd_enable="YES"
+
+# fsck to protect against unclean shutdowns
+fsck_y_enable="YES"
 EOT
 
 # Tune and boot from zfs
